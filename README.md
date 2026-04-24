@@ -1,17 +1,46 @@
 # Face Recognition Attendance System
 
-A comprehensive desktop application built with Python and Tkinter for managing student attendance using facial recognition.
+A comprehensive desktop application built with **Python** and **Tkinter** for managing student attendance using real-time facial recognition.
 
 ## Features
-- **Student Registration**: Register students with their details.
-- **Face Dataset Capture**: Capture images to train the facial recognition model.
-- **Model Training**: Train the model using LBPH (Local Binary Patterns Histograms) Face Recognizer.
-- **Automated Attendance**: Mark attendance automatically when a face is recognized.
-- **Database Integration**: Store student details and attendance records securely using MySQL.
+
+- **Student Registration** — Register students with their personal and course details.
+- **Face Dataset Capture** — Capture face samples via webcam to build the training dataset.
+- **Model Training** — Train the LBPH (Local Binary Patterns Histograms) face recognizer model.
+- **Automated Attendance** — Mark attendance automatically when a registered face is recognized.
+- **Manual Attendance** — Manually mark or update attendance records.
+- **CSV Import / Export** — Import and export attendance data as CSV files.
+- **Help Desk** — Built-in support system with email and WhatsApp integration.
+- **MySQL Integration** — All student and attendance data is stored in a MySQL database.
+
+## Project Structure
+
+```
+Face-Recognition-Attendance-System/
+├── main.py                  # Entry point — run this to start the application
+├── requirements.txt         # Python dependencies
+├── .gitignore
+├── README.md
+│
+├── src/                     # All application modules
+│   ├── __init__.py
+│   ├── student.py           # Student management module
+│   ├── attendance.py        # Attendance management module
+│   ├── train.py             # Model training module
+│   ├── facerecogniton.py    # Face recognition & live camera module
+│   ├── helpdesk.py          # Help desk module
+│   ├── photos.py            # Photos module
+│   └── models/
+│       ├── classifier.xml                   # Trained LBPH model (generated after training)
+│       └── haarcascade_frontalface_default.xml  # Haar Cascade for face detection
+│
+├── pictures/                # UI assets (icons, background images)
+└── data/                    # Training face images (captured via the app)
+```
 
 ## Requirements
 
-Ensure you have Python installed. You can install all dependencies via `pip`:
+Ensure you have Python installed. Install all dependencies with:
 
 ```bash
 pip install -r requirements.txt
@@ -19,28 +48,35 @@ pip install -r requirements.txt
 
 ## Database Setup
 
-1. Make sure you have MySQL installed and running on your local machine.
-2. The default credentials in the code expect `localhost` with the respective username and password (you may need to configure these in `student.py` and other modules).
-3. Create the database and required tables (e.g., `student` and `attendance`) before running the application.
+1. Install and run **MySQL** on your local machine.
+2. Create a database named `mydb`.
+3. The application will automatically create the required tables (`students`, `attendance`) on first launch.
+4. Update the database credentials in `src/student.py`, `src/attendance.py`, and `src/facerecogniton.py` if needed:
+
+```python
+host="localhost"
+user="root"
+password="your_password"
+database="mydb"
+```
 
 ## How to Run
-
-1. Clone the repository to your local machine.
-2. Install the required dependencies using the command above.
-3. Start the application by running the main script:
 
 ```bash
 python main.py
 ```
 
-## Directory Structure
+> **Note:** Always run from the project root directory so that relative paths resolve correctly.
 
-- `data/`: Contains sample datasets (user face captures) for model training.
-- `pictures/`: Contains UI assets (images/icons) for the application interface.
-- `*.py`: The source code files for the application logic and UI screens.
-- `*.xml`: Haar cascade and trained classifier models for face detection and recognition.
+## Workflow
+
+1. **Register a student** using the *Student* module.
+2. **Capture face samples** by clicking *Take Photo* (saves images to `data/`).
+3. **Train the model** using the *Train Data* module (generates `src/models/classifier.xml`).
+4. **Take attendance** automatically using the *Face Recognition* module.
+5. **View / export** records using the *Attendance* module.
 
 ## Notes
 
 - Make sure your webcam is connected and accessible by OpenCV.
-- You can train your own model by navigating to the "Train Data" section in the application after registering new faces.
+- A minimum of ~25 face samples per student is recommended for accurate recognition.
