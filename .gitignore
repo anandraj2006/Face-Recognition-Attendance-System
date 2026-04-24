@@ -1,0 +1,19 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDE / Editor folders
+.vscode/
+.idea/
+
+# Environment files
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Data folder (ignore user training images but keep the folder)
+data/*
+!data/.gitkeep
